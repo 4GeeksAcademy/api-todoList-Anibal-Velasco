@@ -1,0 +1,18 @@
+[
+    {
+        "task": "Hacer la cama",
+        "complete": false
+    },
+    {
+        "task": "Ir al gym",
+        "complete": false
+    },
+    {
+        "task": "Meditar",
+        "complete": false
+    },
+    {
+        "task": "Break de la sociedad :D",
+        "complete": false
+    }
+]

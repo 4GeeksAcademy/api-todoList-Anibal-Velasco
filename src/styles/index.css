@@ -1,12 +1,23 @@
+body{
+    font-family: Arial, sans-serif;
+}
 
-/* 
+.title{
+    font-family:  Arial, Helvetica, sans-serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 50px;
+    color: lightcoral;
+}
 
-    You can write your own styles here...
-    
-    
-    ...Or you can use the import command to include 
-    other sylesheets into your bunde as well, e.j:
-    
-    import 'relative/path/to/stylesheet.scss';
+.inputEdit{
+    border: none;
+    padding: 5px;
+    font-size: 20px;
+    outline: none;
+}
 
-*/
+.botonEdit{
+    border: none;
+    color: lightcoral;
+}
