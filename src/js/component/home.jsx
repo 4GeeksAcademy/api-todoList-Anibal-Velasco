@@ -55,17 +55,20 @@ const Home = () => {
 					</div>
 				)
 			})} */}
-			<ul>
-				{lista.map((item) => {
-					return <>
-						<li key={item.label}>{item.label}</li>
-					</>
-				})}
-			</ul>
+			{lista.map((item, ind) => {
+				return <>
+					{/* <li key={item.label}>{item.label}</li> */}
+					<div key={ind} onMouseEnter={() => setHover(ind)} className="row m-2" >
+						<h5 className="col-11 text-secondary" key={item.label}>{item.label}</h5>
+						{hover == ind && <button className="botonEdit col-1" onClick={() => setLista(lista.filter((obj, index) => ind != index))} >x</button>}
+					</div>
+				</>
+			})}
+
 
 
 			<div>
-				<span>{tareas.length} Item left</span>
+				<span>{lista.length} Item left</span>
 			</div>
 		</Card >
 
