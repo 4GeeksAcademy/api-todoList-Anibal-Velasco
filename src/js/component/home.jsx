@@ -7,16 +7,19 @@ import Card from 'react-bootstrap/Card';
 
 
 const Home = () => {
-	const [searchValue, setSearchValue] = useState("");
-	const [tareas, setTareas] = useState(InitialTask);
 	const [hover, setHover] = useState(false)
-	const [lista, setLista] = useState([])
+	const [lista, setLista] = useState([{
+		"label": "",
+		"done": false
+	}])
 
 
 
 	const ApiFuntion = async () => {
 		try {
-			const resp = await fetch("https://playground.4geeks.com/apis/fake/todos/user/Anibal_jpg");
+			const resp = await fetch("https://playground.4geeks.com/apis/fake/todos/user/Anibal_jpg", {
+				method: "GET"
+			});
 			const data = await resp.json();
 			console.log(resp)
 			setLista(data)
@@ -30,6 +33,40 @@ const Home = () => {
 		ApiFuntion();
 	}, [])
 
+	const agregartarea = async (nuevalista) => {
+		try {
+			const resp = await fetch("https://playground.4geeks.com/apis/fake/todos/user/Anibal_jpg", {
+				method: "PUT",
+				body: JSON.stringify(nuevalista),
+				headers: {
+					"Content-Type": "application/json"
+				}
+			});
+			const data = await resp.json();
+			setLista(nuevalista);
+		} catch (error) {
+			console.log(`este es el ${error}`);
+		}
+	}
+
+	const borrarTarea = async (ind) => {
+		const menosUnaTarea = lista.filter((obj, index) => ind != index)
+		try {
+			const resp = await fetch("https://playground.4geeks.com/apis/fake/todos/user/Anibal_jpg", {
+				method: "PUT",
+				body: JSON.stringify(menosUnaTarea),
+				headers: {
+					"Content-Type": "application/json"
+				}
+			});
+			const data = await resp.json();
+			setLista(menosUnaTarea);
+		} catch (error) {
+			console.log(`este es el ${error}`);
+		}
+	}
+
+
 
 
 
@@ -37,32 +74,29 @@ const Home = () => {
 		<h1 className="title text-center mt-5">Todos</h1>
 		<Card className="d-flex" body>
 			<div className="row m-3">
-				<input className="inputEdit col-12" onKeyUp={(evt) => {
+				<input className="inputEdit col-12" onKeyUp={async (evt) => {
 					if (evt.key == 'Enter') {
-						setTareas([...tareas, { task: evt.target.value }], evt.target.value = "")
-					} else {
-						setSearchValue(evt.target.value)
+						const nuevalista = [...lista, { label: evt.target.value, done: false }]
+						evt.target.value = ""
+						await agregartarea(nuevalista);
+
 					}
 				}}
-					type="text" placeholder="whats need to be done?" defaultValue={searchValue}
+					type="text" placeholder="whats need to be done?" defaultValue={lista.label}
 				/>
 			</div>
-			{/* {tareas.map((task, ind) => {
-				return (
-					<div key={ind} onMouseEnter={() => setHover(ind)} className="row m-2" >
-						<h5 className="col-11 text-secondary" key={ind}>{task.task}</h5>
-						{hover == ind && <button className="botonEdit col-1" onClick={() => setTareas(tareas.filter((obj, index) => ind != index))} >x</button>}
-					</div>
-				)
-			})} */}
+
+
 			{lista.map((item, ind) => {
-				return <>
+				return <div key={ind}>
 					{/* <li key={item.label}>{item.label}</li> */}
-					<div key={ind} onMouseEnter={() => setHover(ind)} className="row m-2" >
+					<div onMouseEnter={() => setHover(ind)} className="row m-2" >
 						<h5 className="col-11 text-secondary" key={item.label}>{item.label}</h5>
-						{hover == ind && <button className="botonEdit col-1" onClick={() => setLista(lista.filter((obj, index) => ind != index))} >x</button>}
+						{hover == ind && <button className="botonEdit col-1" onClick={async () => {
+							borrarTarea(ind)
+						}} >x</button>}
 					</div>
-				</>
+				</div>
 			})}
 
 
