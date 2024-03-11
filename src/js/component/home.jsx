@@ -122,7 +122,7 @@ const Home = () => {
 
 
 			<div>
-				<span className="m-5">{lista.length} Item left</span>
+				<span className="m-5">{lista.length -1} Item left</span>
 				<Button className="ms-5" variant="primary" onClick={deleteReinicio} >Delete all</Button>
 			</div>
 		</Card >
