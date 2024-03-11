@@ -68,6 +68,24 @@ const Home = () => {
 
 
 
+	const deleteReinicio = async () => {
+		try {
+			const resp = await fetch("https://playground.4geeks.com/apis/fake/todos/user/Anibal_jpg", {
+				method: "PUT",
+				body: JSON.stringify([lista[0]]),
+				headers: {
+					"Content-Type": "application/json"
+				}
+			});
+			const data = await resp.json();
+		} catch (error) {
+			console.log(`este es el ${error}`);
+		}
+		ApiFuntion();
+	}
+
+
+
 
 
 	return <>
@@ -88,21 +106,24 @@ const Home = () => {
 
 
 			{lista.map((item, ind) => {
-				return <div key={ind}>
-					{/* <li key={item.label}>{item.label}</li> */}
-					<div onMouseEnter={() => setHover(ind)} className="row m-2" >
-						<h5 className="col-11 text-secondary" key={item.label}>{item.label}</h5>
-						{hover == ind && <button className="botonEdit col-1" onClick={async () => {
-							borrarTarea(ind)
-						}} >x</button>}
+				if (ind > 0) {
+					return <div key={ind}>
+						{/* <li key={item.label}>{item.label}</li> */}
+						<div onMouseEnter={() => setHover(ind)} className="row m-2" >
+							<h5 className="col-11 text-secondary" key={item.label}>{item.label}</h5>
+							{hover == ind && <button className="botonEdit col-1" onClick={async () => {
+								borrarTarea(ind)
+							}} >x</button>}
+						</div>
+
 					</div>
-				</div>
+				}
 			})}
 
 
-
 			<div>
-				<span>{lista.length} Item left</span>
+				<span className="m-5">{lista.length} Item left</span>
+				<Button className="ms-5" variant="primary" onClick={deleteReinicio} >Primary</Button>
 			</div>
 		</Card >
 
