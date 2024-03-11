@@ -123,7 +123,7 @@ const Home = () => {
 
 			<div>
 				<span className="m-5">{lista.length} Item left</span>
-				<Button className="ms-5" variant="primary" onClick={deleteReinicio} >Primary</Button>
+				<Button className="ms-5" variant="primary" onClick={deleteReinicio} >Delete all</Button>
 			</div>
 		</Card >
 
